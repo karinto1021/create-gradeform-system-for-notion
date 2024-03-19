@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <h1>以下が今月の採点表です</h1>
+    <? for(let i = 0; i < urls.length; i++) { ?>
+      <? let url = urls[i]; ?>
+      <h2><?= i + 1 ?>日目 </h2>
+      <td><?= url ?> </td>
+    <? } ?>
+  </body>
+</html>
