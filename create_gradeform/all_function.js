@@ -105,15 +105,44 @@ function unique(array) {
 }
 
 function getPresenters() {
-    presenters_data = sendNotion("databases/" + presenterDatabaseID() + "/query?filter_properties=DO%5Ce&filter_properties=title", null ,"POST")
-    // presenters_data[0]
+    next = undefined
+    has_more = true
+    presenters_data = []
+  
+    while(has_more){
+  
+      payload = {
+        start_cursor: next
+      }
+  
+      let datas = sendNotion("databases/" + presenterDatabaseID() + "/query?filter_properties=DO%5Ce&filter_properties=title", payload ,"POST")
+  
+      next = datas.next_cursor
+      has_more = datas.has_more
+  
+      for(let data of datas.results){
+        presenters_data.push(data)
+      }
+  
+    }
+  
+    return presenters_data.reduce(
+          (h, p) => {
+              h[p.id] = [p.properties.名前.title[0].text.content, p.properties.所属.rich_text[0].text.content]
+              return h
+          }, {}
+      )
 
-    return presenters_data.results.reduce(
-        (h, p) => {
-            h[p.id] = [p.properties.名前.title[0].text.content, p.properties.所属.rich_text[0].text.content]
-            return h
-        }, {}
-    )
+
+    // presenters_data = sendNotion("databases/" + presenterDatabaseID() + "/query?filter_properties=DO%5Ce&filter_properties=title", null ,"POST")
+    // // presenters_data[0]
+
+    // return presenters_data.results.reduce(
+    //     (h, p) => {
+    //         h[p.id] = [p.properties.名前.title[0].text.content, p.properties.所属.rich_text[0].text.content]
+    //         return h
+    //     }, {}
+    // )
 }
 
 // presentationのdatabaseからspreadsheetにデータを追加
