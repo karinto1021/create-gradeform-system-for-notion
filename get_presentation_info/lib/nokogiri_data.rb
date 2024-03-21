@@ -27,16 +27,20 @@ class NokogiriData
     # 著者から発表者を取得
     def self.get_presenter(data)
         name = nil
-        data.split("・").each do |d|
-            if d.start_with? "○"
-                name, syozoku = d.gsub("○", "").split(/[（）]/)
-                return [name, syozoku] if syozoku
-            elsif name
-                _, syozoku = d.split(/[（）]/)
-                return [name, syozoku] if syozoku
+        if data.include? "（"
+            data.split("・").each do |d|
+                if d.start_with? "○"
+                    name, syozoku = d.gsub("○", "").split(/[（）]/)
+                    return [name, syozoku] if syozoku
+                elsif name
+                    _, syozoku = d.split(/[（）]/)
+                    return [name, syozoku] if syozoku
+                end
             end
+        else
+            name = data&.gsub("○", "")
+            return [name, nil]
         end
-        return [nil, nil]
     end
 
     # プログラムのあるHPのデータからプログラムのtableを取得

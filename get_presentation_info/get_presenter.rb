@@ -82,7 +82,12 @@ if !(program_hash.include?(month))
         if !(presenter_hash.include?(pp[5] + "_" + nendo))
             page = presenter_db.create_child_page do |p, pc|
                 pc["名前"] << pp[5] + "_" + nendo
-                pc["所属"] << pp[6]
+                # pc["所属"] << pp[6] if !(pp[6].nil?)
+                if !(pp[6].nil?)
+                    pc["所属"] << pp[6]
+                else
+                    pc["所属"] << "所属記載なし"
+                end
             end
             presenter_hash[pp[5] + "_" + nendo] = page.id
             # puts pp[5]
