@@ -3,16 +3,16 @@ require './lib/nokogiri_data'
 require "notion_ruby_mapping"
 include NotionRubyMapping
 
-NotionRubyMapping.configure { |config| config.token = "secret_5CMC52Uny7x0hISBpYprZd3fOSmbpSgzlTMOU3Kt4v3" }
+NotionRubyMapping.configure { |config| config.token = "secret_*********" }
 
-Codeblock_nendo_id = "7050aab445e74ea9b39b30ae69e28559"
-codeblock_month_id = "738ca94df16c4e389ce4cd26af5d2eb2"
-# codeblock_url_id = "dfb9ea9662c845fdb5ecc5a0df3e700b"
+Codeblock_nendo_id = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+codeblock_month_id = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+# codeblock_url_id = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
-program_db_id = "40dbd3511e994e83b4580829e552b7e3"
-presentation_db_id = "2b48fe83aef04a5c952b149a3b51ab75"
-presenter_db_id = "4eda72a8ebeb43388f7a9546960ded15"
-candidate_db_id = "3f6b9d6c101a4d8f923324005b792ced"
+program_db_id = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+presentation_db_id = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+presenter_db_id = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+candidate_db_id = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
 # 年度を取得
 cb_nendo = CodeBlock.find(Codeblock_nendo_id)
