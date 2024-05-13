@@ -116,11 +116,11 @@ class NokogiriData
             title_document = data[3]
             authors = data[4]
             
-            if number == "(#{counter})" || number == "(#{counter})MW"
+            if number == "(#{counter})" || number == "(#{counter})MW" || number == "(#{counter})[変更あり]"
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
-                need_data.push([number.delete("()MW").to_i, day, time, title, document, presenter, syozoku])
+                need_data.push([number.delete("()MW").delete("[変更あり]").to_i, day, time, title, document, presenter, syozoku])
             end
         end
 
