@@ -80,17 +80,11 @@ class NokogiriData
     # タイトルと資料番号１つになっているデータから資料番号を取得
     def self.get_document(data)
         document = nil
-        
-        # if data.include? "MW"
-        #     text = data.split(/[MW]/).last
-        #     document = "MW" + text
-        # end
 
         data.split(" ").each do |d|
             if d.include?("MW") && !d.include?("MWP")
                 document = d
             end
-            # MWPを含まないようにしなければ
         end
         return document
     end
@@ -116,11 +110,11 @@ class NokogiriData
             title_document = data[3]
             authors = data[4]
             
-            if number == "(#{counter})" || number == "(#{counter})MW" || number == "(#{counter})[変更あり]"
+            if !number.include?("MWP") && number.include?("MW")
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
-                need_data.push([number.delete("()MW").delete("[変更あり]").to_i, day, time, title, document, presenter, syozoku])
+                need_data.push([number.delete("()MWPTHz").delete("[変更あり]").to_i, day, time, title, document, presenter, syozoku])
             end
         end
 
