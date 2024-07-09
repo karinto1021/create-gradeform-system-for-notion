@@ -99,6 +99,15 @@ class NokogiriData
     # とり出したプログラムのtableから必要なデータにする
     def get_need_data
         program_table = get_program_table
+
+        # 日付，場所，座長のtableを削除
+        # (時間，タイトル，著者)がnilのものを削除
+        program_table.each do |data|
+            if data[2].nil? && data[3].nil? && data[4].nil?
+                program_table.delete(data)
+            end
+        end
+
         need_data = []
         counter = 0
         program_table.each do |data|
