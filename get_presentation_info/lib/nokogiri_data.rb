@@ -103,7 +103,7 @@ class NokogiriData
         # 日付，場所，座長のtableを削除
         # (時間，タイトル，著者)がnilのものを削除
         program_table.each do |data|
-            if data[2].nil? && data[3].nil? && data[4].nil?
+            if data[2].nil? || data[3].nil? || data[4].nil?
                 program_table.delete(data)
             end
         end
@@ -119,11 +119,16 @@ class NokogiriData
             title_document = data[3]
             authors = data[4]
             
-            if !number.include?("MWP") && number.include?("MW")
+            if number[-2] == "M" && number[-1] == "W"
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
-                need_data.push([number.delete("()MWPTHz").delete("[変更あり]").to_i, day, time, title, document, presenter, syozoku])
+                need_data.push([number.delete("()MW").delete("[変更あり]").to_i, day, time, title, document, presenter, syozoku])
+            elsif number[-1] == ")"
+                title = NokogiriData.get_title(title_document)
+                document = NokogiriData.get_document(title_document)
+                presenter, syozoku = NokogiriData.get_presenter(authors)
+                need_data.push([number.delete("()").delete("[変更あり]").to_i, day, time, title, document, presenter, syozoku]) 
             end
         end
 
