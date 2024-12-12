@@ -68,7 +68,7 @@ class NokogiriData
                             time = td&.next_element&.text
                             title = td&.next_element&.next_element&.text
                             authors = td&.next_element&.next_element&.next_element&.text
-                            program_table.push([number, day, time, title, authors])
+                            program_table.push([number.delete("[変更あり]"), day, time.delete("[変更あり]"), title, authors])
                         end
                     end
                 end
@@ -123,12 +123,12 @@ class NokogiriData
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
-                need_data.push([number.delete("()MW").delete("[変更あり]").to_i, day, time, title, document, presenter, syozoku])
+                need_data.push([number.delete("( )MW").to_i, day, time, title, document, presenter, syozoku])
             elsif number[-1] == ")"
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
-                need_data.push([number.delete("()").delete("[変更あり]").to_i, day, time, title, document, presenter, syozoku]) 
+                need_data.push([number.delete("( )").to_i, day, time, title, document, presenter, syozoku]) 
             end
         end
 
