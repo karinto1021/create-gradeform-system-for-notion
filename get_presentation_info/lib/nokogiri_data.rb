@@ -68,7 +68,7 @@ class NokogiriData
                             time = td&.next_element&.text
                             title = td&.next_element&.next_element&.text
                             authors = td&.next_element&.next_element&.next_element&.text
-                            program_table.push([number.delete("[変更あり]"), day, time.delete("[変更あり]"), title, authors])
+                            program_table.push([number, day, time, title, authors])
                         end
                     end
                 end
@@ -102,11 +102,9 @@ class NokogiriData
 
         # 日付，場所，座長のtableを削除
         # (時間，タイトル，著者)がnilのものを削除
-        program_table.each do |data|
-            if data[2].nil? || data[3].nil? || data[4].nil?
-                program_table.delete(data)
-            end
-        end
+        program_table.delete_if{ |data|
+            data[2].nil? || data[3].nil? || data[4].nil?
+        }
 
         need_data = []
         counter = 0
@@ -123,12 +121,12 @@ class NokogiriData
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
-                need_data.push([number.delete("( )MW").to_i, day, time, title, document, presenter, syozoku])
+                need_data.push([number&.delete("[変更あり]( )MW").to_i, day, time&.delete("[変更あり]"), title&.delete("[変更あり]"), document, presenter, syozoku])
             elsif number[-1] == ")"
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
-                need_data.push([number.delete("( )").to_i, day, time, title, document, presenter, syozoku]) 
+                need_data.push([number&.delete("[変更あり]( )").to_i, day, time&.delete("[変更あり]"), title&.delete("[変更あり]"), document, presenter, syozoku]) 
             end
         end
 
