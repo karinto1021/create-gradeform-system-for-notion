@@ -122,7 +122,7 @@ class NokogiriData
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
                 need_data.push([number&.delete("[変更あり]( )MW").to_i, day, time&.delete("[変更あり]"), title&.delete("[変更あり]"), document, presenter, syozoku])
-            elsif number[-1] == ")"
+            elsif number[-1] == ")" || number[-1] == "]"
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
