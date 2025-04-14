@@ -5,18 +5,17 @@ require "nokogiri"
 
 class HP_html
     
-    def initialize(url = nil)
-        @url = url
-
-        if @url == nil
+    def initialize(url = nil, file = nil)
+        if url.nil? && file.nil?
             html = open('HP.html').read
-        elsif @url == "program"
+        elsif url == "program"
             html = open('program.html').read
+        elsif url.nil? && !(file.nil?)
+            html = open(file).read
         else
-            html = URI.open(@url).read
+            html = URI.open(url).read
         end
         @html = html
-
     end
     attr_reader :url, :html
 
