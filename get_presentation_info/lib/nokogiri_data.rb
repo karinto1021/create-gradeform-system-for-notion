@@ -62,7 +62,7 @@ class NokogiriData
                         end
                     end
 
-                    100.times do |i|
+                    200.times do |i|
                         if td.text.include?("(#{i+1})")
                             number = td&.text
                             time = td&.next_element&.text
@@ -111,22 +111,26 @@ class NokogiriData
         program_table.each do |data|
             counter += 1
 
-            number = data[0]
+            number = data[0]&.delete(" ")
             day = data[1]
             time = data[2]
             title_document = data[3]
             authors = data[4]
             
-            if number[-2] == "M" && number[-1] == "W"
+            if number[-2] + number[-1] == "MW" || number[-2] + number[-1] == "共通"
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
-                need_data.push([number&.delete("[変更あり]( )MW").to_i, day, time&.delete("[変更あり]"), title&.delete("[変更あり]"), document, presenter, syozoku])
+                need_data.push([number&.delete("[変更あり]( )MW共通").to_i, day, time&.delete("[変更あり]"), title&.delete("[変更あり]"), document, presenter, syozoku])
             elsif number[-1] == ")" || number[-1] == "]"
                 title = NokogiriData.get_title(title_document)
                 document = NokogiriData.get_document(title_document)
                 presenter, syozoku = NokogiriData.get_presenter(authors)
                 need_data.push([number&.delete("[変更あり]( )").to_i, day, time&.delete("[変更あり]"), title&.delete("[変更あり]"), document, presenter, syozoku]) 
+            else
+                # テスト用
+                # pp "error"
+                # pp "対応できない形式のプログラム表示です"
             end
         end
 

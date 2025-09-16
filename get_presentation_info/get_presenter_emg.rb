@@ -55,6 +55,11 @@ else
     exit
 end
 
+if presentation_data.empty?
+    puts "発表データが正しく取得できませんでした\nホームページの形式に対応できません"
+    exit
+end
+
 # program_hashを作る
 program_db = Database.find(program_db_id)
 program = program_db.query_database
